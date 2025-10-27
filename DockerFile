@@ -1,0 +1,21 @@
+# -------------------- Base image --------------------
+FROM python:slim
+
+# -------------------- Working directory --------------------
+WORKDIR /app
+
+# -------------------- Environment setup --------------------
+ENV PYTHONUNBUFFERED=1
+ENV PORT=4000
+
+# -------------------- Copy & install dependencies --------------------
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# -------------------- Copy application --------------------
+COPY python-eq/ ./python-eq/
+COPY .env ./python-eq/.env
+
+# -------------------- Expose & start --------------------
+EXPOSE 4000
+CMD ["python", "python-eq/main_strawberry.py"]
